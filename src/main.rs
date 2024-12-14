@@ -3,17 +3,15 @@ use std::io::{self, Read};
 fn main() {
     let mut input = String::new();
     io::stdin().read_to_string(&mut input).unwrap();
-    let reports: Vec<_> = input
-        .lines()
-        .map(|line| {
-            line.split_ascii_whitespace()
-                .map(|s| s.parse::<u8>().unwrap())
-                .collect::<Vec<_>>()
-        })
-        .collect();
+    let reports = input.lines().map(|line| {
+        line.split_ascii_whitespace()
+            .map(|s| s.parse::<u8>().unwrap())
+            .collect::<Vec<_>>()
+    });
 
     let (safe_reports, unsafe_reports): (Vec<_>, Vec<_>) =
-        reports.into_iter().partition(|report| is_safe(&report[..]));
+        reports.partition(|report| is_safe(&report[..]));
+
     let result = safe_reports.into_iter().count();
     println!("part 1: {}", result);
 
